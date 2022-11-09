@@ -4,6 +4,8 @@
   "description": "KTribe application to analyze customer online reviews, comments and generate a report for BI",
   "main": "index.js",
   "scripts": {
+    "build": "ng build",
+    "dev": "ng serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
