@@ -1,0 +1,19 @@
+{
+  "name": "ikhokha-assessment",
+  "version": "1.0.0",
+  "description": "KTribe application to analyze customer online reviews, comments and generate a report for BI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LwaziV/ikhokha-assessment.git"
+  },
+  "author": "Lwazi Vubu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LwaziV/ikhokha-assessment/issues"
+  },
+  "homepage": "https://github.com/LwaziV/ikhokha-assessment#readme"
+}
