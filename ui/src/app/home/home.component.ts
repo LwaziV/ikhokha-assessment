@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     const todaysDate = new Date();
     this.reportService.viewCommentsAndReviewsReport(todaysDate)
       .subscribe((res: any) => {
-        this.report = res.Reviews;
+        this.report = res;
         const url = window.URL.createObjectURL(new Blob([this.report]));
         const link = document.createElement('a');
         link.href = url;
@@ -57,25 +57,27 @@ export class HomeComponent implements OnInit {
 
   // Checks if comment meets conditions before trying to create a review
   checkReviewCondition(review: string) {
-    if (!review) {
+    if (!this.reviewComment) {
       this.snackBar.open("Review does not meet our requirements!", '', {
         verticalPosition: "bottom",
         horizontalPosition: "center",
         panelClass: ["custom-toast-style"]
       });
-    }
-    review = this.reviewComment.toLocaleLowerCase();
-    if (review.length < 15) {
-      this.createReview(review);
-    } else if (review.includes("mover") || review.includes("shaker")) {
-      this.createReview(review);
     } else {
-      this.snackBar.open("Review does not meet our requirements!", '', {
-        verticalPosition: "bottom",
-        horizontalPosition: "center",
-        panelClass: ["custom-toast-style"]
-      });
+      review = this.reviewComment.toLocaleLowerCase();
+      if (review.length < 15) {
+        this.createReview(review);
+      } else if (review.includes("mover") || review.includes("shaker")) {
+        this.createReview(review);
+      } else {
+        this.snackBar.open("Review does not meet our requirements!", '', {
+          verticalPosition: "bottom",
+          horizontalPosition: "center",
+          panelClass: ["custom-toast-style"]
+        });
+      }
     }
+
   }
 
   // send review to the backend and store it in today's review document
