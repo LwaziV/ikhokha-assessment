@@ -3,20 +3,21 @@
     <img src="./../../assets/images/Logo.svg" />
     <div class="spacer"></div>
     <a>
-        <img src="./../../assets/images/chat.png" />
+        <img src="./../../assets/images/chat.png" /> &nbsp;
     </a>
+    <p>{{totalReviews}}</p>
 </div>
 <div class="content">
     <div class="title">
-        <h2>View all comments and analysis</h2>
-        <div class="button-container">
+        <h2>View all comments and reviews</h2>
+        <div class="button-container" (click)="getCommentsAndReviewsReport()">
             View report
         </div>
     </div>
 </div>
 <div class="customer-section-wrapper">
     <div class="comment-section">
-        <textarea type="text" placeholder="Comment here"></textarea>
-        <button class="comment-btn">Comment</button>
+        <textarea type="text" placeholder="Comment here" [(ngModel)]="report"></textarea>
+        <button class="comment-btn" (click)="createReview(report)">Comment</button>
     </div>
 </div>

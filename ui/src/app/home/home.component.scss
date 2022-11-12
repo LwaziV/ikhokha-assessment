@@ -10,10 +10,17 @@
     color: white;
     font-weight: 600;
     a {
-        padding-right: 40px;
         img {
             width: 30px;
         }
+    }
+    p{
+    padding-right: 30px;
+    position: relative;
+    left: 0;
+    margin-right: 15px;
+    font-size: larger;
+    color: #201e1e;
     }
 }
 .spacer {
