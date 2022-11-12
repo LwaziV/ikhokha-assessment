@@ -11,17 +11,18 @@ export class ReportsService {
 
     constructor(private http: HttpClient) { }
 
-    // gets the total number of comments that currently exists
-    getTotalNumberOfComments() {
-        return this.http.get(`${this.BASE_URL}/reports/total-comments`);
+    // gets the total number of comments and reviews that currently exists
+    getTotalNumberOfReviews() {
+        return this.http.get(`${this.BASE_URL}/reports/total-reviews`);
     }
 
     // gets the report containing the comments and all reviews
     viewCommentsAndReviewsReport(date: Date) {
-        return this.http.post(`${this.BASE_URL}/reports/view-report`, { date });
+        return this.http.post(`${this.BASE_URL}/reports/view-reviews`, { date });
     }
 
-    createANewReview(words: string) {
-        return this.http.post(`${this.BASE_URL}/reports/create-report`, { words });
+    // create a new review
+    createANewReview(review: string) {
+        return this.http.post(`${this.BASE_URL}/reports/create-review`, { review });
     }
 }

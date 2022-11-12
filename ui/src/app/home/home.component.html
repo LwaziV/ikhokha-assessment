@@ -2,6 +2,7 @@
 <div class="toolbar" role="banner">
     <img src="./../../assets/images/Logo.svg" />
     <div class="spacer"></div>
+    
     <a>
         <img src="./../../assets/images/chat.png" /> &nbsp;
     </a>
@@ -14,10 +15,16 @@
             View report
         </div>
     </div>
+    <div class="reviews-wrapper">
+        <p> 
+            "SHAKER" reviews : {{shakerReviews}} <br />
+            "MOVER" reviews : {{moverReviews}}
+        </p>
+    </div>
 </div>
 <div class="customer-section-wrapper">
     <div class="comment-section">
-        <textarea type="text" placeholder="Comment here" [(ngModel)]="report"></textarea>
-        <button class="comment-btn" (click)="createReview(report)">Comment</button>
+        <textarea type="text" placeholder="Comment here" [(ngModel)]="reviewComment"></textarea>
+        <button class="comment-btn" (click)="checkReviewCondition(report)">Comment</button>
     </div>
 </div>
