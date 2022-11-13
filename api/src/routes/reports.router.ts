@@ -6,7 +6,7 @@ export const router = Router({
   strict: true,
 });
 
-// REFACTOR RESOURCE URLS
+// Resource URLS
 router.get('/total-reviews', getTotalNumberOfReviews);
 router.post('/view-reviews', viewReport);
 router.post('/create-review', createReview);

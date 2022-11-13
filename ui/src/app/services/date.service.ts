@@ -1,4 +1,10 @@
+import { Injectable } from "@angular/core";
+
+@Injectable({
+    providedIn: 'root'
+})
 export class DateService {
+    // Generates today's date to be appended to the comments namespace
     getTodaysDate() {
         let date = new Date();
         const month = date.getUTCMonth() + 1;

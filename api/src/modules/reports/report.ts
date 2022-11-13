@@ -21,7 +21,7 @@ export const getTotalNumberOfReviews = async (req: Request, res: Response) => {
                 shakerOccurrences = (reviews.toLocaleLowerCase().match(/shaker/g) || []).length;
                 // Total number of occurences of "Maker in the reviews"
                 moverOccurrences = (reviews.toLocaleLowerCase().match(/mover/g) || []).length;
-                return HttpResponse.ok(res, {totalComments: fileLines.length, ShakerOccurrences: shakerOccurrences, MoverOccurrences: moverOccurrences});
+                return HttpResponse.ok(res, {totalComments: fileLines.length - 1, ShakerOccurrences: shakerOccurrences, MoverOccurrences: moverOccurrences});
         });
        
     } catch (error) {
@@ -63,7 +63,7 @@ export const createReview = async (req: Request, res: Response) => {
     let dateService = new DateService();
     const newdate = dateService.getTodaysDate();
     var resolvedPath = path.resolve('./src/docs/comments-' + `${newdate}` + '.txt');
-    fsPromises.appendFile(resolvedPath, "\r\n" + review).then((reviews: any) => {
+    fsPromises.appendFile(resolvedPath,"\n" + review).then((reviews: any) => {
         return HttpResponse.ok(res, "Successfully created a new review.");
     }, error => {
         return HttpResponse.badRequest(res, "Failed to create a new review.");

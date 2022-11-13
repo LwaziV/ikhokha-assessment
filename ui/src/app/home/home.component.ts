@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DateService } from '../services/date.service';
+import { MessageHandlerService } from '../services/message.service';
 import { ReportsService } from './../services/reports.service'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [MessageHandlerService, DateService]
 })
 export class HomeComponent implements OnInit {
   totalReviews: number = 0;
@@ -14,15 +15,15 @@ export class HomeComponent implements OnInit {
   shakerReviews: number = 0;
   report: any;
   reviewComment: string;
-  constructor(private reportService: ReportsService, private snackBar: MatSnackBar) { }
+  constructor(private reportService: ReportsService, 
+    private messageService: MessageHandlerService, private dateService: DateService) { }
 
   ngOnInit(): void {
     this.getTotalNumberOfComments();
   }
 
-  // get total number of reviews
+  // get total number of reviews in the latest file
   getTotalNumberOfComments() {
-    debugger;
     this.reportService.getTotalNumberOfReviews()
       .subscribe((res: any) => {
         this.totalReviews = res.totalComments;
@@ -41,28 +42,19 @@ export class HomeComponent implements OnInit {
         const url = window.URL.createObjectURL(new Blob([this.report]));
         const link = document.createElement('a');
         link.href = url;
-        let dateService = new DateService();
-        const newdate = dateService.getTodaysDate();
+        const newdate = this.dateService.getTodaysDate();
         link.setAttribute('download', 'comments-' + `${newdate}` + '.txt');
         document.body.appendChild(link);
         link.click()
       }, error => {
-        this.snackBar.open("Failed to get reviews", '', {
-          verticalPosition: "bottom",
-          horizontalPosition: "center",
-          panelClass: ["custom-toast-style"]
-        });
+        this.messageService.displayMessage("Failed to get reviews");
       });
   }
 
   // Checks if comment meets conditions before trying to create a review
   checkReviewCondition(review: string) {
     if (!this.reviewComment) {
-      this.snackBar.open("Review does not meet our requirements!", '', {
-        verticalPosition: "bottom",
-        horizontalPosition: "center",
-        panelClass: ["custom-toast-style"]
-      });
+      this.messageService.displayMessage("Review does not meet our requirements!");
     } else {
       review = this.reviewComment.toLocaleLowerCase();
       if (review.length < 15) {
@@ -70,11 +62,7 @@ export class HomeComponent implements OnInit {
       } else if (review.includes("mover") || review.includes("shaker")) {
         this.createReview(review);
       } else {
-        this.snackBar.open("Review does not meet our requirements!", '', {
-          verticalPosition: "bottom",
-          horizontalPosition: "center",
-          panelClass: ["custom-toast-style"]
-        });
+        this.messageService.displayMessage("Review does not meet our requirements!");
       }
     }
 
@@ -85,19 +73,12 @@ export class HomeComponent implements OnInit {
     review = this.reviewComment;
     this.reportService.createANewReview(review)
       .subscribe((res: any) => {
-        this.snackBar.open(res, '', {
-          verticalPosition: "bottom",
-          horizontalPosition: "center",
-          panelClass: ["custom-toast-style"]
-        });
+        this.messageService.displayMessage(res);
         this.reviewComment = "";
         this.getTotalNumberOfComments();
       }, (err) => {
-        this.snackBar.open("Failed to create a review", '', {
-          verticalPosition: "bottom",
-          horizontalPosition: "center",
-          panelClass: ["custom-toast-style"]
-        });
-      })
+        console.log(err);
+        this.messageService.displayMessage("Failed to create a review");
+      });
   }
 }
